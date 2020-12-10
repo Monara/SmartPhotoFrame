@@ -18,6 +18,8 @@ defaultScreenHeight = 600
 defaultImage = "default.jpg"
 imagesToCycle = 3
 
+def quit(event): #quit program with esc, no other means
+	root.destroy()
 
 def update_clock():
 	timeZone = tz.gettz("Europe/Vilnius")
@@ -28,7 +30,7 @@ def update_clock():
 	
 def access_dropbox():
 	try:
-		dbx = dropbox.Dropbox("ACCESS_TOKEN")	#access token, no expiration
+		dbx = dropbox.Dropbox("ACCESS_KEY")	#access token, no expiration
 		return dbx
 	except:
 		print ("Cannot access Dropbox.")
@@ -150,13 +152,14 @@ def update_image_and_info(dbx, oldImageName):
 		os.remove(imgPath)
 		
 	#Run again after delay
-	root.after(3600000, update_image_and_info, dbx, imgPath)
+	root.after(3600000, update_image_and_info, dbx, imgPath) #1 hour
 
 #Root widget
 root = Tk()
-#root.attributes("-type", "splash") #remove window frame. "dock" always on top
+root.bind("<Escape>", quit)
 root.geometry("1024x600")
-root.configure(bg="black")
+root.attributes("-fullscreen", True)
+root.configure(bg="black", cursor="none")
 root.resizable(False, False) #no maximizing
 
 #Frames for image and info
