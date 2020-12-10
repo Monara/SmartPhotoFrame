@@ -27,10 +27,17 @@ def update_clock():
 	dateAndTimeStr = dateAndTime.strftime("%H:%M")
 	currentTime.configure(text=" " + dateAndTimeStr) #gap from icon
 	root.after(1000, update_clock)
+
+def read_file_contents(fileName):
+	file = open(fileName, "r")
+	contents = file.read().strip()
+	file.close()
+	return contents
 	
 def access_dropbox():
 	try:
-		dbx = dropbox.Dropbox("ACCESS_KEY")	#access token, no expiration
+		access_key = read_file_contents("dropbox_key.txt")
+		dbx = dropbox.Dropbox(access_key)
 		return dbx
 	except:
 		print ("Cannot access Dropbox.")
