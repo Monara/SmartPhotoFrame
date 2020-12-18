@@ -71,7 +71,7 @@ def get_dropbox_image(dbx, imageEntry):
 	imgPath = imageEntry.path_lower
 	
 	try:	
-		#Get thumbnail.Tuple returned
+		#Get thumbnail (only available as jpeg or png). Tuple returned
 		(dbxImgMeta, dbxImg) = dbx.files_get_thumbnail(path=imgPath, format=ThumbnailFormat("jpeg", None), size=ThumbnailSize("w1024h768", None), mode=ThumbnailMode("strict", None))
 		
 		#Save file
@@ -95,7 +95,7 @@ def update_image_and_info(dbx, oldImageName):
 		try:
 			#List files
 			listFolder = dbx.files_list_folder(path=uploadImagesFolder)
-			listFolderImages = list(filter(lambda x: x.name.endswith(".jpeg") or x.name.endswith(".jpg"), listFolder.entries))
+			listFolderImages = list(filter(lambda x: x.name.endswith(".jpeg") or x.name.endswith(".jpg"), listFolder.entries)) #can also include gif, tiff, tif, bmp, png
 			fileCount = len(listFolderImages)
 			print(fileCount)
 		except:

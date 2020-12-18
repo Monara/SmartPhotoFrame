@@ -1,7 +1,6 @@
 #!/bin/bash
 
-#run script
-export DISPLAY=:0
+export DISPLAY=:0 #can run through ssh
 cd /home/pi/smartphotoframe/
-#git pull
+git pull
 python3 main.py
